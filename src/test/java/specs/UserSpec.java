@@ -8,15 +8,23 @@ import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.ALL;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.hasItems;
 
-public class ResourceListSpec {
+public class UserSpec {
+
+    public static RequestSpecification createUserRequestSpec = with()
+            .filter(withCustomTemplates())
+            .contentType(JSON)
+            .log().all();
+
+    public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(201)
+            .log(ALL)
+            .build();
 
     public static RequestSpecification resourceListRequestSpec = with()
             .filter(withCustomTemplates())
-            .log().uri()
             .contentType(JSON)
-            .basePath("/api/unknown/2");
+            .log().all();
 
     public static ResponseSpecification resourceListResponseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)

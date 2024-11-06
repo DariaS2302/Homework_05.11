@@ -5,11 +5,14 @@ import models.CreateUserResponseModel;
 import models.ResourceListResponseModel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.CreateUserSpec.*;
-import static specs.ResourceListSpec.*;
+import static specs.UserSpec.createUserRequestSpec;
+import static specs.UserSpec.createUserResponseSpec;
+import static specs.UserSpec.resourceListRequestSpec;
+import static specs.UserSpec.resourceListResponseSpec;
 
 @Tag("SMOKE")
 
@@ -22,33 +25,33 @@ public class ReqresTests extends TestBase {
     void successfulCheckListResourceTest() {
 
 
-        ResourceListResponseModel response = step("GetList", ()->
-        given(resourceListRequestSpec)
-                .get()
-
-                .then()
-                .spec(resourceListResponseSpec)
-                .extract().as(ResourceListResponseModel.class));
-
-
-        step("СheckResourceList", ()->
-            assertEquals("To keep ReqRes free, contributions towards server costs are appreciated!", response.getSupport().getText())
-        );
-    }
-
-    @Test
-    void unsuccessfulCheckListResourceTest() {
-
-        ResourceListResponseModel response = step("GetList", ()->
+        ResourceListResponseModel response = step("GetList", () ->
                 given(resourceListRequestSpec)
-                        .get()
+                        .get("/unknown/2")
 
                         .then()
                         .spec(resourceListResponseSpec)
                         .extract().as(ResourceListResponseModel.class));
 
 
-        step("СheckResourceList", ()->
+        step("СheckResourceList", () ->
+                assertEquals("To keep ReqRes free, contributions towards server costs are appreciated!", response.getSupport().getText())
+        );
+    }
+
+    @Test
+    void unsuccessfulCheckListResourceTest() {
+
+        ResourceListResponseModel response = step("GetList", () ->
+                given(resourceListRequestSpec)
+                        .get("/unknown/2")
+
+                        .then()
+                        .spec(resourceListResponseSpec)
+                        .extract().as(ResourceListResponseModel.class));
+
+
+        step("СheckResourceList", () ->
                 assertEquals("https://fail.reqres.in/#support-heading", response.getSupport().getUrl())
         );
     }
@@ -59,19 +62,19 @@ public class ReqresTests extends TestBase {
         createUserModel.setName("morpheus");
         createUserModel.setJob("leader");
 
-        CreateUserResponseModel response = step("СreateUser", ()->
-            given(createUserRequestSpec)
-                    .body(createUserModel)
+        CreateUserResponseModel response = step("СreateUser", () ->
+                given(createUserRequestSpec)
+                        .body(createUserModel)
 
-            .when()
-                    .post()
+                        .when()
+                        .post("/users")
 
-            .then()
-                    .spec(createUserResponseSpec)
-                    .extract().as(CreateUserResponseModel.class));
+                        .then()
+                        .spec(createUserResponseSpec)
+                        .extract().as(CreateUserResponseModel.class));
 
 
-        step("СheckCreateUser", ()-> {
+        step("СheckCreateUser", () -> {
             assertEquals("morpheus", response.getName());
             assertEquals("leader", response.getJob());
         });
@@ -87,11 +90,11 @@ public class ReqresTests extends TestBase {
                 given(createUserRequestSpec)
                         .body(createUserModel)
 
-                .when()
-                        .post()
+                        .when()
+                        .post("/users")
 
-                .then()
-                        .spec(notCreateUserResponseSpec)
+                        .then()
+                        .spec(createUserResponseSpec)
                         .extract().as(CreateUserResponseModel.class));
 
         step("СheckCreateUser", () -> {
