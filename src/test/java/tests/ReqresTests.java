@@ -9,10 +9,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.UserSpec.createUserRequestSpec;
-import static specs.UserSpec.createUserResponseSpec;
-import static specs.UserSpec.resourceListRequestSpec;
-import static specs.UserSpec.resourceListResponseSpec;
+import static specs.UserSpec.*;
 
 @Tag("SMOKE")
 
@@ -30,7 +27,7 @@ public class ReqresTests extends TestBase {
                         .get("/unknown/2")
 
                         .then()
-                        .spec(resourceListResponseSpec)
+                        .spec(resourceListResponse200Spec)
                         .extract().as(ResourceListResponseModel.class));
 
 
@@ -47,7 +44,7 @@ public class ReqresTests extends TestBase {
                         .get("/unknown/2")
 
                         .then()
-                        .spec(resourceListResponseSpec)
+                        .spec(resourceListResponse200Spec)
                         .extract().as(ResourceListResponseModel.class));
 
 
@@ -70,7 +67,7 @@ public class ReqresTests extends TestBase {
                         .post("/users")
 
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(createUserResponse201Spec)
                         .extract().as(CreateUserResponseModel.class));
 
 
@@ -94,7 +91,7 @@ public class ReqresTests extends TestBase {
                         .post("/users")
 
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(createUserResponse201Spec)
                         .extract().as(CreateUserResponseModel.class));
 
         step("СheckCreateUser", () -> {

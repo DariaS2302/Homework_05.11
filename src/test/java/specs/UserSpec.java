@@ -16,7 +16,7 @@ public class UserSpec {
             .contentType(JSON)
             .log().all();
 
-    public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification createUserResponse201Spec = new ResponseSpecBuilder()
             .expectStatusCode(201)
             .log(ALL)
             .build();
@@ -26,7 +26,7 @@ public class UserSpec {
             .contentType(JSON)
             .log().all();
 
-    public static ResponseSpecification resourceListResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification resourceListResponse200Spec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .log(ALL)
             .build();
