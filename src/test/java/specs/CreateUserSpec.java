@@ -21,9 +21,4 @@ public class CreateUserSpec {
             .expectStatusCode(201)
             .log(ALL)
             .build();
-
-    public static ResponseSpecification notCreateUserResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(201)
-            .log(ALL)
-            .build();
 }
