@@ -23,7 +23,7 @@ public class ReqresTests extends TestBase {
 
 
         ResourceListResponseModel response = step("GetList", () ->
-                given(resourceListRequestSpec)
+                given(UserRequestSpec)
                         .get("/unknown/2")
 
                         .then()
@@ -40,7 +40,7 @@ public class ReqresTests extends TestBase {
     void unsuccessfulCheckListResourceTest() {
 
         ResourceListResponseModel response = step("GetList", () ->
-                given(resourceListRequestSpec)
+                given(UserRequestSpec)
                         .get("/unknown/2")
 
                         .then()
@@ -60,7 +60,7 @@ public class ReqresTests extends TestBase {
         createUserModel.setJob("leader");
 
         CreateUserResponseModel response = step("СreateUser", () ->
-                given(createUserRequestSpec)
+                given(UserRequestSpec)
                         .body(createUserModel)
 
                         .when()
@@ -84,7 +84,7 @@ public class ReqresTests extends TestBase {
         createUserModel.setJob("leader");
 
         CreateUserResponseModel response = step("CreateUser", () ->
-                given(createUserRequestSpec)
+                given(UserRequestSpec)
                         .body(createUserModel)
 
                         .when()

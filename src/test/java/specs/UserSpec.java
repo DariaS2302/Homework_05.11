@@ -11,7 +11,7 @@ import static io.restassured.http.ContentType.JSON;
 
 public class UserSpec {
 
-    public static RequestSpecification createUserRequestSpec = with()
+    public static RequestSpecification UserRequestSpec = with()
             .filter(withCustomTemplates())
             .contentType(JSON)
             .log().all();
@@ -20,11 +20,6 @@ public class UserSpec {
             .expectStatusCode(201)
             .log(ALL)
             .build();
-
-    public static RequestSpecification resourceListRequestSpec = with()
-            .filter(withCustomTemplates())
-            .contentType(JSON)
-            .log().all();
 
     public static ResponseSpecification resourceListResponse200Spec = new ResponseSpecBuilder()
             .expectStatusCode(200)
